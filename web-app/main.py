@@ -37,6 +37,12 @@ class MainHandler(webapp2.RequestHandler):
                 data = data[0]
                 data.value = self.request.get("value")
                 data.put()
+        elif self.request.get("action") == "cleanup":
+            ndb.delete_multi(
+                MiscData.query().fetch(keys_only=True)
+            )
+            self.response.write('Data cleaned successfully!')
+            self.response.headers["Content-Type"] = "text/plain"
         else:
             data = MiscData.query().fetch()
             self.response.write('<html><head><title>Horatiu Misc Stuff</title></head><body>')

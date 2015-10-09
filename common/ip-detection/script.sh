@@ -1,2 +1,2 @@
 cd /home/pi/Desktop/projects/horatiu-misc-stuff/common/ip-detection
-python sendIp.py 0
+python main.py 0

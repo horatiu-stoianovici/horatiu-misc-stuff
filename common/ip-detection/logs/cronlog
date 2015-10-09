@@ -8,18 +8,18 @@ eth0      Link encap:Ethernet  HWaddr b8:27:eb:c4:d4:71
 lo        Link encap:Local Loopback  
           inet addr:127.0.0.1  Mask:255.0.0.0
           UP LOOPBACK RUNNING  MTU:65536  Metric:1
-          RX packets:89692 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:89692 errors:0 dropped:0 overruns:0 carrier:0
+          RX packets:95667 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:95667 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:0 
-          RX bytes:791737481 (755.0 MiB)  TX bytes:791737481 (755.0 MiB)
+          RX bytes:814871241 (777.1 MiB)  TX bytes:814871241 (777.1 MiB)
 
 wlan0     Link encap:Ethernet  HWaddr 00:13:ef:60:10:05  
           inet addr:192.168.43.70  Bcast:192.168.43.255  Mask:255.255.255.0
           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-          RX packets:13920 errors:0 dropped:46 overruns:0 frame:0
-          TX packets:17916 errors:0 dropped:0 overruns:0 carrier:0
+          RX packets:15354 errors:0 dropped:48 overruns:0 frame:0
+          TX packets:20459 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1000 
-          RX bytes:3974238 (3.7 MiB)  TX bytes:13826212 (13.1 MiB)
+          RX bytes:4187788 (3.9 MiB)  TX bytes:15756469 (15.0 MiB)
 
 Sending data to http://horatiu-misc-stuff.appspot.com/ . . .
 Success!

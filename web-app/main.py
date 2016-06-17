@@ -43,6 +43,15 @@ class MainHandler(webapp2.RequestHandler):
             )
             self.response.write('Data cleaned successfully!')
             self.response.headers["Content-Type"] = "text/plain"
+        elif self.request.get("action") == "getData":
+            key = self.request.get("key")
+            data = MiscData.query(MiscData.key == key).fetch(1)
+            if len(data) != 0:
+                self.response.headers["Content-Type"] = "text/plain"
+                self.response.write(data[0].value)
+            else:
+                self.error(404)
+                self.write("<h1>The key was not found!</h1>")
         else:
             data = MiscData.query().fetch()
             self.response.write('<html><head><title>Horatiu Misc Stuff</title></head><body>')

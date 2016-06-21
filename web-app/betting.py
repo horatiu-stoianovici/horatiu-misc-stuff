@@ -17,7 +17,11 @@ class BettingHandler(webapp2.RequestHandler):
         	self.response.write('<b>%(name)s</b> - %(rate).2f<span> %%' % {"name" : opportunity["name"], "rate" : opportunity['chances']['rate']})
         	self.response.write('<p>Back - %(backOdds).2f <a href="%(backUrl)s" target="_blank">%(backUrl)s</a></p>' % opportunity)
         	self.response.write('<p>Lay - %(layOdds).2f with %(layMoney).2f EUR <a href=%(layUrl)s" target="_blank">%(layUrl)s</a></p>' % opportunity)
-        	self.response.write('<input type="text" class="moneyInput" data-index="%(index)d"/> - Back <span id="back%(index)d"></span> EUR and lay <span id="lay%(index)d"></span> EUR (with liability of <span id="liability%(index)s"></span>)' % {"index": i})
+        	self.response.write("""<input type="text" class="moneyInput" data-index="%(index)d"/> - Back 
+        		<span id="back%(index)d" class="backSuggestedAmount"></span> EUR and lay 
+        		<span id="lay%(index)d" class="laySuggestedAmount"></span> EUR (with liability of 
+        		<span id="liability%(index)s" class="liabilitySuggestedAmount"></span>) and win 
+        		<span id="win%(index)s" class="winSuggestedAmount"></span> EUR""" % {"index": i})
         	self.response.write('</li>')
         	i += 1
         self.response.write('</ul>')
@@ -35,6 +39,9 @@ class BettingHandler(webapp2.RequestHandler):
         			var layOdds = new Big(bettingOpportunities[index].layOdds);
         			layOdds = layOdds.div(layOdds.minus(1))
         			var layMoney = layOdds.minus(1).times(layLiability);
+
+        			var winnings = new Big(money).div(new Big(chances.totalPercentage).div(100)).minus(money);
+        			$('#win' + index).text(winnings.toFixed(2));
         			$('#back' + index).text(backMoney.toFixed(2));
         			$('#lay' + index).text(layMoney.toFixed(2));
         			$('#liability' + index).text(layLiability.toFixed(2));

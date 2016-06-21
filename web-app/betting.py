@@ -16,7 +16,7 @@ class BettingHandler(webapp2.RequestHandler):
         	self.response.write('<li>')
         	self.response.write('<b>%(name)s</b> - %(rate).2f<span> %%' % {"name" : opportunity["name"], "rate" : opportunity['chances']['rate']})
         	self.response.write('<p>Back - %(backOdds).2f <a href="%(backUrl)s" target="_blank">%(backUrl)s</a></p>' % opportunity)
-        	self.response.write('<p>Lay - %(layOdds).2f with %(layMoney).2f EUR <a href=%(layUrl)s" target="_blank">%(layUrl)s</a></p>' % opportunity)
+        	self.response.write('<p>Lay - %(layOdds).2f with %(layMoney).2f EUR <a href="%(layUrl)s" target="_blank">%(layUrl)s</a></p>' % opportunity)
         	self.response.write("""<input type="text" class="moneyInput" data-index="%(index)d"/> - Back 
         		<span id="back%(index)d" class="backSuggestedAmount"></span> EUR and lay 
         		<span id="lay%(index)d" class="laySuggestedAmount"></span> EUR (with liability of 

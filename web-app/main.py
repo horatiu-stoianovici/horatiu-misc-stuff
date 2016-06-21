@@ -15,14 +15,11 @@
 # limitations under the License.
 #
 import webapp2
+import betting
 from google.appengine.ext import ndb
+from models import *
 
 ipAddressKey = 'ipAddress'
-
-class MiscData(ndb.Model):
-    key = ndb.StringProperty(indexed=True)
-    value = ndb.StringProperty(indexed=False)
-    date = ndb.DateTimeProperty(indexed=False,auto_now=True)
 
 
 class MainHandler(webapp2.RequestHandler):
@@ -67,5 +64,6 @@ class MainHandler(webapp2.RequestHandler):
         self.handleRequest()
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/betting', betting.BettingHandler)
 ], debug=True)

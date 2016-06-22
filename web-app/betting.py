@@ -23,18 +23,18 @@ class BettingHandler(webapp2.RequestHandler):
         	self.response.write('<b>%(name)s</b> - %(rate).2f<span> %%' % {"name" : opportunity["name"], "rate" : opportunity['chances']['rate']})
         	self.response.write('<div class="container backBackground">Back - %(backOdds).2f <a href="%(backUrl)s" target="_blank">%(backUrl)s</a></div>' % opportunity)
         	self.response.write('<div class="container layBackground">Lay - %(layOdds).2f with %(layMoney).2f EUR <a href="%(layUrl)s" target="_blank">%(layUrl)s</a></div>' % opportunity)
-        	self.response.write("""<input type="text" class="moneyInput" data-index="%(index)d"/> - Back 
-        		<span id="back%(index)d" class="backSuggestedAmount"></span> EUR and lay 
-        		<span id="lay%(index)d" class="laySuggestedAmount"></span> EUR (with liability of 
-        		<span id="liability%(index)s" class="liabilitySuggestedAmount"></span>) and win 
-        		<span id="win%(index)s" class="winSuggestedAmount"></span> EUR""" % {"index": i})
+        	self.response.write("""<input type="text" class="moneyInput" data-index="%(index)d" id="total%(index)d"/> - Back 
+        		<input type="text" data-index="%(index)d" id="back%(index)d" class="backSuggestedAmount"></span> EUR and lay 
+        		<input type="text" data-index="%(index)d" id="lay%(index)d" class="laySuggestedAmount"></span> EUR (with liability of 
+        		<input type="text" data-index="%(index)d" id="liability%(index)s" class="liabilitySuggestedAmount"></span>) and win 
+        		<input type="text" data-index="%(index)d" id="win%(index)s" class="winSuggestedAmount"></span> EUR""" % {"index": i})
         	self.response.write('</div></li>')
         	i += 1
         self.response.write('</ul>')
         self.response.write('<script>bettingOpportunities = ' + json.dumps(opportunities) + ';</script>')
         self.response.write("""
         	<script>
-        		var recalculateFunc = function(e){
+        		var totalSumChanged = function(e){
         			var money = parseFloat($(this).val());
         			var index = parseInt($(this).attr('data-index'));
         			var chances = bettingOpportunities[index].chances;
@@ -47,13 +47,42 @@ class BettingHandler(webapp2.RequestHandler):
         			var layMoney = layOdds.minus(1).times(layLiability);
 
         			var winnings = new Big(money).div(new Big(chances.totalPercentage).div(100)).minus(money);
-        			$('#win' + index).text(winnings.toFixed(2));
-        			$('#back' + index).text(backMoney.toFixed(2));
-        			$('#lay' + index).text(layMoney.toFixed(2));
-        			$('#liability' + index).text(layLiability.toFixed(2));
+        			$('#win' + index).val(winnings.toFixed(2));
+        			$('#back' + index).val(backMoney.toFixed(2));
+        			$('#lay' + index).val(layMoney.toFixed(2));
+        			$('#liability' + index).val(layLiability.toFixed(2));
         		};
-        		$('.moneyInput').change(recalculateFunc).keyup(recalculateFunc);
-        		$('.moneyInput').val(100).change();
+                var backSumChanged = function(e){
+                    var backMoney = new Big(parseFloat($(this).val()));
+                    var index = parseInt($(this).attr('data-index'));
+                    var opportunity = bettingOpportunities[index];
+                    var layOdds = new Big(opportunity.layOdds);
+                    
+                    var backArbPercentage = new Big(opportunity.chances.backPercentage);
+                    var layArbPercentage = new Big(opportunity.chances.layPercentage);
+                    var totalPercentage = new Big(opportunity.chances.totalPercentage);
+                    
+                    var backRealRate = backArbPercentage.div(totalPercentage);
+                    var layRealRate = layArbPercentage.div(totalPercentage);
+                    
+                    //formulas:
+                    //backRealRate * totalSum = backMoney;
+                    //layRealRate * totalSum = layMoney;
+                    //so if backMoney changes => totalSum = backMoney / backRealRate and then layMoney = layRealRate * totalSum
+                    var totalSum = backMoney.div(backRealRate);
+                    layOdds = layOdds.div(layOdds.minus(1))
+                    var layLiability = totalSum.times(opportunity.chances.layPercentage / opportunity.chances.totalPercentage);
+                    var layMoney = layOdds.minus(1).times(layLiability);
+                    var winnings = new Big(totalSum).div(new Big(totalPercentage).div(100)).minus(totalSum);
+                    $('#win' + index).val(winnings.toFixed(2));
+                    $('#lay' + index).val(layMoney.toFixed(2));
+                    $('#liability' + index).val(layLiability.toFixed(2));
+                    $('#total' + index).val(totalSum.toFixed(2));
+                }
+        		$('.moneyInput').keyup(totalSumChanged);
+        		$('.moneyInput').val(100).keyup();
+
+                $('.backSuggestedAmount').keyup(backSumChanged);
         	</script>
         """);
         self.response.write('</body></html>')

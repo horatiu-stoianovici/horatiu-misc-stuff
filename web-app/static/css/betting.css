@@ -18,12 +18,34 @@ body{
     margin: 10px;
 }
 
-.backBackground {
+input.backSuggestedAmount, input.laySuggestedAmount, input.liabilitySuggestedAmount, input.winSuggestedAmount, input.moneyInput {
+    border-style: solid;
+    border-width: 1px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    width:auto;
+    padding:5px;
+    text-align:center;
+    width:60px;
+}
+
+.backBackground, .backSuggestedAmount {
 	background-color: #D7ECFA;
 	border-color: #84C4F1 #84C4F1 #53ACEB;
 }
 
-.layBackground {
+.layBackground, .laySuggestedAmount {
 	background-color: #FDDEE5;
     border-color: #FBAFBF #FBAFBF #FAA0B2;
+}
+
+.liabilitySuggestedAmount {
+	background-color: #FFF0F2;
+    border-color: #FFDEE3 #FFDEE3 #FFDEE3;
+}
+
+.winSuggestedAmount {
+	background-color: #DEFDDF;
+	border-color: #A8F7AA;
 }

@@ -23,11 +23,11 @@ class BettingHandler(webapp2.RequestHandler):
         	self.response.write('<b>%(name)s</b> - %(rate).2f<span> %%' % {"name" : opportunity["name"], "rate" : opportunity['chances']['rate']})
         	self.response.write('<div class="container backBackground">Back - %(backOdds).2f <a href="%(backUrl)s" target="_blank">%(backUrl)s</a></div>' % opportunity)
         	self.response.write('<div class="container layBackground">Lay - %(layOdds).2f with %(layMoney).2f EUR <a href="%(layUrl)s" target="_blank">%(layUrl)s</a></div>' % opportunity)
-        	self.response.write("""<input type="text" class="moneyInput" data-index="%(index)d" id="total%(index)d"/> - Back 
-        		<input type="text" data-index="%(index)d" id="back%(index)d" class="backSuggestedAmount"></span> EUR and lay 
-        		<input type="text" data-index="%(index)d" id="lay%(index)d" class="laySuggestedAmount"></span> EUR (with liability of 
-        		<input type="text" data-index="%(index)d" id="liability%(index)s" class="liabilitySuggestedAmount"></span>) and win 
-        		<input type="text" data-index="%(index)d" id="win%(index)s" class="winSuggestedAmount"></span> EUR""" % {"index": i})
+        	self.response.write("""<div class="suggestionsContainer"><div>Total <input type="text" class="moneyInput" data-index="%(index)d" id="total%(index)d"/> EUR</div><div> Back 
+        		<input type="text" data-index="%(index)d" id="back%(index)d" class="backSuggestedAmount"> EUR </div><div> Lay 
+        		<input type="text" data-index="%(index)d" id="lay%(index)d" class="laySuggestedAmount"> EUR (with liability of 
+        		<input type="text" data-index="%(index)d" id="liability%(index)s" class="liabilitySuggestedAmount">) </div><div> Win 
+        		<input type="text" data-index="%(index)d" id="win%(index)s" class="winSuggestedAmount"> EUR</div></div>""" % {"index": i})
         	self.response.write('</div></li>')
         	i += 1
         self.response.write('</ul>')

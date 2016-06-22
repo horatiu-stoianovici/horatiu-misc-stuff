@@ -9,13 +9,12 @@ body{
 
 .container {
 	padding:15px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
     text-align: left;
-    border-style: solid;
+    border-top-style: solid;
+    border-bottom-style: solid;
     border-width: 1px;
     margin: 10px;
+    border-color: #CCCCCC;
 }
 
 input.backSuggestedAmount, input.laySuggestedAmount, input.liabilitySuggestedAmount, input.winSuggestedAmount, input.moneyInput {
@@ -28,6 +27,7 @@ input.backSuggestedAmount, input.laySuggestedAmount, input.liabilitySuggestedAmo
     padding:5px;
     text-align:center;
     width:60px;
+    font-weight: bold;
 }
 
 .backBackground, .backSuggestedAmount {
@@ -43,9 +43,18 @@ input.backSuggestedAmount, input.laySuggestedAmount, input.liabilitySuggestedAmo
 .liabilitySuggestedAmount {
 	background-color: #FFF0F2;
     border-color: #FFDEE3 #FFDEE3 #FFDEE3;
+    font-weight: normal!important;
 }
 
 .winSuggestedAmount {
 	background-color: #DEFDDF;
 	border-color: #A8F7AA;
+}
+
+.suggestionsContainer {
+	text-align: center;
+}
+
+.suggestionsContainer div{
+	margin:10px;
 }
